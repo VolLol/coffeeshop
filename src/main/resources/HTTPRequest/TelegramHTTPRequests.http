@@ -1,0 +1,18 @@
+POST http://localhost:8080/v1/api/customer/registration
+Content-Type: application/json
+
+{
+  "telegramId": 7283
+}
+
+###
+
+GET http://localhost:8080/v1/api/customer/76723/profile
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/v1/api/customer/63847/monthlyReport
+Content-Type: application/json
+
+###

@@ -1,0 +1,19 @@
+GET http://localhost:8080/v1/api/employee/statistics/getAvgCountCustomersByGender?gender=MALE
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/v1/api/employee/statistics/getAvgCountCustomersByGender?gender=FEMALE
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/v1/api/employee/statistics/getAverageBillByLastMonth?shopId=7836468
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/v1/api/employee/statistics/getAvgCountCustomersByLastPeriod?shopId=7328372&period=DAY
+Content-Type: application/json
+
+###

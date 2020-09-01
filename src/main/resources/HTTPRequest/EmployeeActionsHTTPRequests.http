@@ -1,0 +1,32 @@
+POST http://localhost:8080/v1/api/employee/customers/setProperties
+Content-Type: application/json
+
+{
+  "customerId": 78347,
+  "gender": "MALE",
+  "dateOfBirth": "1995-11-11"
+}
+
+###
+
+POST http://localhost:8080/v1/api/employee/customers/addVisit
+Content-Type: application/json
+
+{
+  "customerId": 78347,
+  "shopId": 278388,
+  "paid": 83.12,
+  "reason": "BUY"
+}
+
+###
+
+PUT http://localhost:8080/v1/api/employee/giveOutFreeCup
+Content-Type: application/json
+
+{
+  "customerId": 78347,
+  "shopId": 278388
+}
+
+###
