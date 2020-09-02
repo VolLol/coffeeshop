@@ -1,4 +1,4 @@
-package net.example.coffeeshop.enums;
+package net.example.coffeeshop.entrypoints.enums;
 
 public enum Gender {
     MALE,

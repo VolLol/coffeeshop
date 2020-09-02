@@ -1,10 +1,10 @@
-package net.example.coffeeshop.controllers;
+package net.example.coffeeshop.entrypoints.controllers;
 
-import net.example.coffeeshop.response.MonthlyReportByTelegramIdResponse;
-import net.example.coffeeshop.enums.Gender;
-import net.example.coffeeshop.request.RegistrationNewCustomerRequest;
-import net.example.coffeeshop.response.CustomerProfileResponse;
-import net.example.coffeeshop.response.RegistrationNewCustomerResponse;
+import net.example.coffeeshop.entrypoints.response.MonthlyReportByTelegramIdResponse;
+import net.example.coffeeshop.entrypoints.enums.Gender;
+import net.example.coffeeshop.entrypoints.request.RegistrationNewCustomerRequest;
+import net.example.coffeeshop.entrypoints.response.CustomerProfileResponse;
+import net.example.coffeeshop.entrypoints.response.RegistrationNewCustomerResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class CustomerController {
 
     @GetMapping("v1/api/customer/{telegramId}/profile")
     public CustomerProfileResponse showProfileByTelegramId(@PathVariable Long telegramId) {
-        CustomerProfileResponse profile = CustomerProfileResponse.builder()
+        return CustomerProfileResponse.builder()
                 .customerId(782374L)
                 .telegramId(telegramId)
                 .gender(Gender.MALE)
@@ -30,7 +30,6 @@ public class CustomerController {
                 .createAt(LocalDateTime.now())
                 .updateAt(LocalDateTime.now().minusDays(10L))
                 .build();
-        return profile;
     }
 
     @GetMapping("v1/api/customer/{telegramId}/monthlyReport")

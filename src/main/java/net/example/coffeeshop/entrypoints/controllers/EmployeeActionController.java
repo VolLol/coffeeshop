@@ -1,11 +1,11 @@
-package net.example.coffeeshop.controllers;
+package net.example.coffeeshop.entrypoints.controllers;
 
-import net.example.coffeeshop.request.AddNewVisitRequest;
-import net.example.coffeeshop.request.CustomerPropertiesRequest;
-import net.example.coffeeshop.request.GiveOutFreeCupRequest;
-import net.example.coffeeshop.response.AddNewVisitResponse;
-import net.example.coffeeshop.response.CustomerPropertiesResponse;
-import net.example.coffeeshop.response.GiveOutFreeCupResponse;
+import net.example.coffeeshop.entrypoints.request.AddNewVisitRequest;
+import net.example.coffeeshop.entrypoints.request.CustomerPropertiesRequest;
+import net.example.coffeeshop.entrypoints.request.GiveOutFreeCupRequest;
+import net.example.coffeeshop.entrypoints.response.AddNewVisitResponse;
+import net.example.coffeeshop.entrypoints.response.CustomerPropertiesResponse;
+import net.example.coffeeshop.entrypoints.response.GiveOutFreeCupResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;

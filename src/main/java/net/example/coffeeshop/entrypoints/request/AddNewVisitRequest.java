@@ -1,7 +1,7 @@
-package net.example.coffeeshop.request;
+package net.example.coffeeshop.entrypoints.request;
 
 import lombok.Getter;
-import net.example.coffeeshop.enums.Reason;
+import net.example.coffeeshop.entrypoints.enums.Reason;
 
 public class AddNewVisitRequest {
 

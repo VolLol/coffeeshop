@@ -1,4 +1,4 @@
-package net.example.coffeeshop.request;
+package net.example.coffeeshop.entrypoints.request;
 
 import lombok.Getter;
 
