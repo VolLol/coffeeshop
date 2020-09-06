@@ -1,20 +1,27 @@
-package net.example.coffeeshop.entrypoints.response;
+package net.example.coffeeshop.entities;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.example.coffeeshop.entrypoints.enums.Gender;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Builder
-@NoArgsConstructor
-public class CustomerProfileResponse {
+@Entity
+@Table(name = "customers")
+public class Customer {
 
+    public Customer() {
+    }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Getter
-    private Long customerId;
+    private Long id;
+    @Setter
     @Getter
     private Long telegramId;
     @Getter
@@ -24,8 +31,7 @@ public class CustomerProfileResponse {
     @Getter
     private Integer points;
     @Getter
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
     @Getter
-    private LocalDateTime createAt;
-
+    private LocalDateTime createdAt;
 }
