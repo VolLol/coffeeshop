@@ -1,19 +1,14 @@
-package net.example.coffeeshop.entrypoints.response;
+package net.example.coffeeshop.entrypoints.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import net.example.coffeeshop.entrypoints.enums.Gender;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class CustomerProfileResponse {
-
+public class CustomerProfileDTO {
 
     @Getter
     private Long customerId;
@@ -29,5 +24,4 @@ public class CustomerProfileResponse {
     private LocalDateTime updateAt;
     @Getter
     private LocalDateTime createAt;
-
 }

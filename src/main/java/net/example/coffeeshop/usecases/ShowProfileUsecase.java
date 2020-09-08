@@ -1,11 +1,12 @@
-package net.example.coffeeshop.entrypoints.usecases;
+package net.example.coffeeshop.usecases;
 
 import net.example.coffeeshop.entities.Customer;
+import net.example.coffeeshop.entrypoints.dto.CustomerProfileDTO;
 import net.example.coffeeshop.entrypoints.response.CustomerProfileResponse;
 import net.example.coffeeshop.repositories.CustomerRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ShowProfileUsecase {
 
     private final CustomerRepository customerRepository;
@@ -15,10 +16,10 @@ public class ShowProfileUsecase {
         this.customerRepository = customerRepository;
     }
 
-    public CustomerProfileResponse execute(Long telegramId) {
-        CustomerProfileResponse response;
+    public CustomerProfileDTO execute(Long telegramId) {
+        CustomerProfileDTO dto;
         Customer customer = customerRepository.findByTelegramId(telegramId);
-        response = CustomerProfileResponse.builder()
+        dto = CustomerProfileDTO.builder()
                 .customerId(customer.getId())
                 .telegramId(customer.getTelegramId())
                 .yearOfBirth(customer.getYearOfBirth())
@@ -27,6 +28,6 @@ public class ShowProfileUsecase {
                 .createAt(customer.getCreatedAt())
                 .updateAt(customer.getUpdatedAt())
                 .build();
-        return response;
+        return dto;
     }
 }
