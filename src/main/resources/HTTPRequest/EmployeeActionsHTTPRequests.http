@@ -2,7 +2,7 @@ POST http://localhost:8080/v1/api/employee/customers/setProperties
 Content-Type: application/json
 
 {
-  "customerId": 78347,
+  "customerId": 2,
   "gender": "MALE",
   "dateOfBirth": "1995-11-11"
 }
