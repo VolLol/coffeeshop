@@ -5,11 +5,10 @@ create table customers
     id          bigserial primary key,
     telegramId  bigint not null,
     yearOfBirth date,
-    gender      genderType default 'UNKNOWN',
-    points      int        default 0,
+    gender      genderType     default 'UNKNOWN',
+    points      decimal(12, 3) default 0,
     updatedAt   timestamp,
     createdAt   timestamp
-
 );
 
 create unique index customers_id_uindex

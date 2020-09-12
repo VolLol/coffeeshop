@@ -9,14 +9,14 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/v1/api/employee/customers/addVisit
+POST http://localhost:8080/v1/api/employee/customers/addSale
 Content-Type: application/json
 
 {
-  "customerId": 78347,
-  "shopId": 278388,
-  "paid": 83.12,
-  "reason": "BUY"
+  "customerId": 1,
+  "shopId": 1,
+  "paid": 0.75,
+  "reason": "SALE"
 }
 
 ###

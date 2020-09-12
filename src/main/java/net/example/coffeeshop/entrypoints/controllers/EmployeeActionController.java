@@ -1,12 +1,14 @@
 package net.example.coffeeshop.entrypoints.controllers;
 
+import net.example.coffeeshop.entrypoints.dto.AddSaleDTO;
 import net.example.coffeeshop.entrypoints.dto.UpdateCustomerInformationDTO;
-import net.example.coffeeshop.entrypoints.request.AddNewVisitRequest;
+import net.example.coffeeshop.entrypoints.request.AddNewSaleRequest;
 import net.example.coffeeshop.entrypoints.request.CustomerPropertiesRequest;
 import net.example.coffeeshop.entrypoints.request.GiveOutFreeCupRequest;
-import net.example.coffeeshop.entrypoints.response.AddNewVisitResponse;
+import net.example.coffeeshop.entrypoints.response.AddNewSaleResponse;
 import net.example.coffeeshop.entrypoints.response.CustomerPropertiesResponse;
 import net.example.coffeeshop.entrypoints.response.GiveOutFreeCupResponse;
+import net.example.coffeeshop.usecases.AddSaleUsecase;
 import net.example.coffeeshop.usecases.UpdateCustomerInformationUsecase;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeActionController {
 
     private final UpdateCustomerInformationUsecase updateCustomerInformationUsecase;
+    private final AddSaleUsecase addSaleUsecase;
 
-    public EmployeeActionController(UpdateCustomerInformationUsecase updateCustomerInformationUsecase) {
+    public EmployeeActionController(UpdateCustomerInformationUsecase updateCustomerInformationUsecase, AddSaleUsecase addSaleUsecase) {
         this.updateCustomerInformationUsecase = updateCustomerInformationUsecase;
+        this.addSaleUsecase = addSaleUsecase;
     }
 
     @PostMapping("v1/api/employee/customers/setProperties")
@@ -30,9 +34,10 @@ public class EmployeeActionController {
     }
 
 
-    @PostMapping("v1/api/employee/customers/addVisit")
-    public AddNewVisitResponse addNewVisit(@RequestBody AddNewVisitRequest request) {
-        return new AddNewVisitResponse("Add new visit for customer with id " + request.getCustomerId());
+    @PostMapping("v1/api/employee/customers/addSale")
+    public AddNewSaleResponse addSale(@RequestBody AddNewSaleRequest request) {
+        AddSaleDTO dto = addSaleUsecase.execute(request.getCustomerId(), request.getShopId(), request.getPaid(), request.getReason());
+        return new AddNewSaleResponse(dto.getMessage());
     }
 
 

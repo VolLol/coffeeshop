@@ -2,9 +2,9 @@ package net.example.coffeeshop.entrypoints.response;
 
 import lombok.Getter;
 
-public class AddNewVisitResponse {
+public class AddNewSaleResponse {
 
-    public AddNewVisitResponse(String message) {
+    public AddNewSaleResponse(String message) {
         this.message = message;
     }
 

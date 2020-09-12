@@ -3,7 +3,10 @@ package net.example.coffeeshop.entrypoints.request;
 import lombok.Getter;
 import net.example.coffeeshop.entrypoints.enums.Reason;
 
-public class AddNewVisitRequest {
+import java.math.BigDecimal;
+
+
+public class AddNewSaleRequest {
 
 
     @Getter
@@ -13,7 +16,7 @@ public class AddNewVisitRequest {
     private Long shopId;
 
     @Getter
-    private Long paid;
+    private BigDecimal paid;
 
     @Getter
     private Reason reason;

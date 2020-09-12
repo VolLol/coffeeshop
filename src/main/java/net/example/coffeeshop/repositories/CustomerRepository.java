@@ -9,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +23,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Modifying
     @Query("UPDATE customers set yearofbirth = :yearofbirth, gender = :gender where id = :id")
     void setGenderAndDateIfBirth(@Param("yearofbirth") LocalDate yearofbirth, @Param("gender") Gender gender, @Param("id") Long customerId);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE customers set points = :points,updatedAt=:updatedAt where id = :customerId")
+    void setPaid(@Param("points") BigDecimal points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import net.example.coffeeshop.entrypoints.enums.Gender;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -34,7 +35,7 @@ public class Customer {
     private Gender gender;
     @Getter
     @Column(name = "points")
-    private Integer points;
+    private BigDecimal points;
     @Setter
     @Getter
     @Column(name = "updatedat")

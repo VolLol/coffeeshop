@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.example.coffeeshop.entrypoints.enums.Gender;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ public class CustomerProfileResponse {
     @Getter
     private Gender gender;
     @Getter
-    private Integer points;
+    private BigDecimal points;
     @Getter
     private LocalDateTime updateAt;
     @Getter

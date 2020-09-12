@@ -1,1 +1,2 @@
 CREATE TYPE genderType AS ENUM ('MALE','FEMALE','UNKNOWN');
+CREATE TYPE reasonType AS ENUM ('SALE','FREE');
