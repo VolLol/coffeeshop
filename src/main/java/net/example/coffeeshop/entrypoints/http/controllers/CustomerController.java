@@ -1,7 +1,11 @@
 package net.example.coffeeshop.entrypoints.http.controllers;
 
 import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerAlreadyExistException;
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerHasNotSalesException;
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerNotExistException;
+import net.example.coffeeshop.usecases.MonthlyReportByTelegramIdUsecase;
 import net.example.coffeeshop.usecases.dto.CustomerProfileDTO;
+import net.example.coffeeshop.usecases.dto.MonthlyReportDTO;
 import net.example.coffeeshop.usecases.dto.RegistrationNewCustomerDTO;
 import net.example.coffeeshop.entrypoints.http.controllers.response.MonthlyReportByTelegramIdResponse;
 import net.example.coffeeshop.entrypoints.http.controllers.request.RegistrationNewCustomerRequest;
@@ -19,11 +23,12 @@ public class CustomerController {
 
     private final RegistrationNewCustomerUsecase registrationNewCustomerUsecase;
     private final ShowProfileUsecase showProfileUsecase;
+    private final MonthlyReportByTelegramIdUsecase monthlyReportByTelegramIdUsecase;
 
-
-    public CustomerController(RegistrationNewCustomerUsecase registrationNewCustomerUsecase, ShowProfileUsecase showProfileUsecase) {
+    public CustomerController(RegistrationNewCustomerUsecase registrationNewCustomerUsecase, ShowProfileUsecase showProfileUsecase, MonthlyReportByTelegramIdUsecase monthlyReportByTelegramIdUsecase) {
         this.registrationNewCustomerUsecase = registrationNewCustomerUsecase;
         this.showProfileUsecase = showProfileUsecase;
+        this.monthlyReportByTelegramIdUsecase = monthlyReportByTelegramIdUsecase;
     }
 
     @PostMapping("v1/api/customer/registration")
@@ -56,8 +61,17 @@ public class CustomerController {
     }
 
     @GetMapping("v1/api/customer/{telegramId}/monthlyReport")
-    public MonthlyReportByTelegramIdResponse showMonthlyReportByTelegramId(@PathVariable Long telegramId) {
-        return new MonthlyReportByTelegramIdResponse(37L);
+    public ResponseEntity<MonthlyReportByTelegramIdResponse> showMonthlyReportByTelegramId(@PathVariable Long telegramId) {
+        try {
+            MonthlyReportDTO dto = monthlyReportByTelegramIdUsecase.execute(telegramId);
+            MonthlyReportByTelegramIdResponse response = MonthlyReportByTelegramIdResponse.builder()
+                    .spentInLastMonth(dto.getAllSpendMoney())
+                    .sales(dto.getSales())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (CustomerNotExistException | CustomerHasNotSalesException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
 }

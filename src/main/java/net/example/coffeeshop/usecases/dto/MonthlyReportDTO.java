@@ -1,4 +1,4 @@
-package net.example.coffeeshop.entrypoints.http.controllers.response;
+package net.example.coffeeshop.usecases.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,10 +13,10 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MonthlyReportByTelegramIdResponse {
+public class MonthlyReportDTO {
 
     @Getter
-    private BigDecimal spentInLastMonth;
-    @Getter
     private List<Sale> sales = new ArrayList<>();
+    @Getter
+    private BigDecimal allSpendMoney;
 }

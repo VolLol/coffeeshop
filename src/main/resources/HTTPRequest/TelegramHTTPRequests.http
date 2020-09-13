@@ -2,7 +2,7 @@ POST http://localhost:8080/v1/api/customer/registration
 Content-Type: application/json
 
 {
-  "telegramId": 123466
+  "telegramId": 9
 }
 
 ###
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/v1/api/customer/63847/monthlyReport
+GET http://localhost:8080/v1/api/customer/7234/monthlyReport
 Content-Type: application/json
 
 ###
