@@ -12,6 +12,7 @@ import net.example.coffeeshop.usecases.ShowProfileUsecase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class CustomerController {
@@ -26,7 +27,7 @@ public class CustomerController {
     }
 
     @PostMapping("v1/api/customer/registration")
-    public ResponseEntity<RegistrationNewCustomerResponse> registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
+    public RegistrationNewCustomerResponse registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
         RegistrationNewCustomerResponse response;
         try {
             RegistrationNewCustomerDTO dto = registrationNewCustomerUsecase.execute(request.getTelegramId());
@@ -34,13 +35,10 @@ public class CustomerController {
                     .message(dto.getMessage())
                     .httpStatus(HttpStatus.CREATED)
                     .build();
+            return response;
         } catch (CustomerAlreadyExistException e) {
-            response = RegistrationNewCustomerResponse.builder()
-                    .message(e.getMessage())
-                    .httpStatus(HttpStatus.BAD_REQUEST)
-                    .build();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
-        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     @GetMapping("v1/api/customer/{telegramId}/profile")
