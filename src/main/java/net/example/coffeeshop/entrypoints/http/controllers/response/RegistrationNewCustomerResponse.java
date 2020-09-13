@@ -1,17 +1,18 @@
 package net.example.coffeeshop.entrypoints.http.controllers.response;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.http.HttpStatus;
 
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class RegistrationNewCustomerResponse {
 
-    public RegistrationNewCustomerResponse(String message) {
-        this.message = message;
-    }
-
-    @Setter
     @Getter
     private String message;
+
+    @Getter
+    private HttpStatus httpStatus;
+
+
 }

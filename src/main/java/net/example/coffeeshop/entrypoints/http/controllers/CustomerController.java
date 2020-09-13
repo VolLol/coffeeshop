@@ -1,5 +1,6 @@
 package net.example.coffeeshop.entrypoints.http.controllers;
 
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerAlreadyExistException;
 import net.example.coffeeshop.usecases.dto.CustomerProfileDTO;
 import net.example.coffeeshop.usecases.dto.RegistrationNewCustomerDTO;
 import net.example.coffeeshop.entrypoints.http.controllers.response.MonthlyReportByTelegramIdResponse;
@@ -8,6 +9,8 @@ import net.example.coffeeshop.entrypoints.http.controllers.response.CustomerProf
 import net.example.coffeeshop.entrypoints.http.controllers.response.RegistrationNewCustomerResponse;
 import net.example.coffeeshop.usecases.RegistrationNewCustomerUsecase;
 import net.example.coffeeshop.usecases.ShowProfileUsecase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,11 +26,21 @@ public class CustomerController {
     }
 
     @PostMapping("v1/api/customer/registration")
-    public RegistrationNewCustomerResponse registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
-        RegistrationNewCustomerDTO dto = registrationNewCustomerUsecase.execute(request.getTelegramId());
-        RegistrationNewCustomerResponse response = new RegistrationNewCustomerResponse();
-        response.setMessage(dto.getMessage());
-        return response;
+    public ResponseEntity<RegistrationNewCustomerResponse> registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
+        RegistrationNewCustomerResponse response;
+        try {
+            RegistrationNewCustomerDTO dto = registrationNewCustomerUsecase.execute(request.getTelegramId());
+            response = RegistrationNewCustomerResponse.builder()
+                    .message(dto.getMessage())
+                    .httpStatus(HttpStatus.CREATED)
+                    .build();
+        } catch (CustomerAlreadyExistException e) {
+            response = RegistrationNewCustomerResponse.builder()
+                    .message(e.getMessage())
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+        return ResponseEntity.status(response.getHttpStatus()).body(response);
     }
 
     @GetMapping("v1/api/customer/{telegramId}/profile")

@@ -1,5 +1,6 @@
 package net.example.coffeeshop.usecases;
 
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerAlreadyExistException;
 import net.example.coffeeshop.repositories.models.Customer;
 import net.example.coffeeshop.usecases.dto.RegistrationNewCustomerDTO;
 import net.example.coffeeshop.repositories.models.enums.Gender;
@@ -17,7 +18,7 @@ public class RegistrationNewCustomerUsecase {
         this.repository = repository;
     }
 
-    public RegistrationNewCustomerDTO execute(Long telegramId) {
+    public RegistrationNewCustomerDTO execute(Long telegramId) throws CustomerAlreadyExistException {
         Customer customer = repository.findByTelegramId(telegramId);
         RegistrationNewCustomerDTO dto = new RegistrationNewCustomerDTO();
         if (customer == null) {
@@ -29,9 +30,9 @@ public class RegistrationNewCustomerUsecase {
                     .gender(Gender.UNKNOWN)
                     .build();
             repository.save(newCustomer);
+            return dto;
         } else {
-            dto.setMessage("Customer is exist");
+            throw new CustomerAlreadyExistException("Customer is already exist");
         }
-        return dto;
     }
 }
