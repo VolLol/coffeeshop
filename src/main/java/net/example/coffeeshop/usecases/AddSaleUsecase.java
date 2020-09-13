@@ -1,10 +1,10 @@
 package net.example.coffeeshop.usecases;
 
-import net.example.coffeeshop.entities.Customer;
-import net.example.coffeeshop.entities.Sale;
-import net.example.coffeeshop.entities.Shop;
-import net.example.coffeeshop.entrypoints.dto.AddSaleDTO;
-import net.example.coffeeshop.entrypoints.enums.Reason;
+import net.example.coffeeshop.repositories.models.Customer;
+import net.example.coffeeshop.repositories.models.Sale;
+import net.example.coffeeshop.repositories.models.Shop;
+import net.example.coffeeshop.usecases.dto.AddSaleDTO;
+import net.example.coffeeshop.repositories.models.enums.Reason;
 import net.example.coffeeshop.repositories.CustomerRepository;
 import net.example.coffeeshop.repositories.SaleRepository;
 import net.example.coffeeshop.repositories.ShopRepository;
@@ -37,8 +37,7 @@ public class AddSaleUsecase {
             if (shop.isEmpty()) {
                 dto.setMessage("Shop with id = " + shopId + " not exist");
             } else {
-                BigDecimal newPoints = paid.add(customer.get().getPoints());
-                customerRepository.setPaid(newPoints, customerId, LocalDateTime.now());
+                customerRepository.addPoints(1, customerId, LocalDateTime.now());
                 Sale sale = Sale.builder()
                         .customerId(customerId)
                         .shopId(shopId)
@@ -48,7 +47,7 @@ public class AddSaleUsecase {
                         .build();
                 saleRepository.save(sale);
                 // поменять порядок для Optional
-                dto.setMessage("Successful add sale for customer with id= " + customerId + " . Customer paid = " + newPoints);
+                dto.setMessage("Successful add sale for customer with id= " + customerId + " . Customer paid = " + paid);
             }
         }
 

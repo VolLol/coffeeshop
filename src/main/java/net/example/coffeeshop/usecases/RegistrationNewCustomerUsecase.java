@@ -1,8 +1,8 @@
 package net.example.coffeeshop.usecases;
 
-import net.example.coffeeshop.entities.Customer;
-import net.example.coffeeshop.entrypoints.dto.RegistrationNewCustomerDTO;
-import net.example.coffeeshop.entrypoints.enums.Gender;
+import net.example.coffeeshop.repositories.models.Customer;
+import net.example.coffeeshop.usecases.dto.RegistrationNewCustomerDTO;
+import net.example.coffeeshop.repositories.models.enums.Gender;
 import net.example.coffeeshop.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 

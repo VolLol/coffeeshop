@@ -1,7 +1,7 @@
 package net.example.coffeeshop.repositories;
 
-import net.example.coffeeshop.entities.Customer;
-import net.example.coffeeshop.entrypoints.enums.Gender;
+import net.example.coffeeshop.repositories.models.Customer;
+import net.example.coffeeshop.repositories.models.enums.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,10 +9,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
@@ -27,5 +25,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE customers set points = :points,updatedAt=:updatedAt where id = :customerId")
-    void setPaid(@Param("points") BigDecimal points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
+    void addPoints(@Param("points") Integer points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
 }
