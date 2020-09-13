@@ -37,7 +37,7 @@ public class AddSaleUsecase {
             if (shop.isEmpty()) {
                 dto.setMessage("Shop with id = " + shopId + " not exist");
             } else {
-                customerRepository.addPoints(1, customerId, LocalDateTime.now());
+                customerRepository.setPoints(1, customerId, LocalDateTime.now());
                 Sale sale = Sale.builder()
                         .customerId(customerId)
                         .shopId(shopId)

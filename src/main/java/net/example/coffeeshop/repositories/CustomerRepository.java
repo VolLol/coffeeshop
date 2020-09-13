@@ -25,5 +25,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE customers set points = :points,updatedAt=:updatedAt where id = :customerId")
-    void addPoints(@Param("points") Integer points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
+    void setPoints(@Param("points") Integer points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
 }
