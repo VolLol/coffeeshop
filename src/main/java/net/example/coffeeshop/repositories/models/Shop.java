@@ -2,6 +2,7 @@ package net.example.coffeeshop.repositories.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Long id;
+    @Getter
     @Column(name = "address")
     private String address;
 }

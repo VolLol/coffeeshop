@@ -47,17 +47,23 @@ public class CustomerController {
     }
 
     @GetMapping("v1/api/customer/{telegramId}/profile")
-    public CustomerProfileResponse showProfileByTelegramId(@PathVariable Long telegramId) {
-        CustomerProfileDTO dto = showProfileUsecase.execute(telegramId);
-        return CustomerProfileResponse.builder()
-                .customerId(dto.getCustomerId())
-                .telegramId(dto.getTelegramId())
-                .points(dto.getPoints())
-                .gender(dto.getGender())
-                .yearOfBirth(dto.getYearOfBirth())
-                .updateAt(dto.getUpdateAt())
-                .createAt(dto.getCreateAt())
-                .build();
+    public ResponseEntity<CustomerProfileResponse> showProfileByTelegramId(@PathVariable Long telegramId) {
+        CustomerProfileDTO dto;
+        try {
+            dto = showProfileUsecase.execute(telegramId);
+            CustomerProfileResponse response = CustomerProfileResponse.builder()
+                    .customerId(dto.getCustomerId())
+                    .telegramId(dto.getTelegramId())
+                    .points(dto.getPoints())
+                    .gender(dto.getGender())
+                    .yearOfBirth(dto.getYearOfBirth())
+                    .updateAt(dto.getUpdateAt())
+                    .createAt(dto.getCreateAt())
+                    .build();
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } catch (CustomerNotExistException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @GetMapping("v1/api/customer/{telegramId}/monthlyReport")
@@ -66,7 +72,8 @@ public class CustomerController {
             MonthlyReportDTO dto = monthlyReportByTelegramIdUsecase.execute(telegramId);
             MonthlyReportByTelegramIdResponse response = MonthlyReportByTelegramIdResponse.builder()
                     .spentInLastMonth(dto.getAllSpendMoney())
-                    .sales(dto.getSales())
+                    .report(dto.getReport())
+                    .points(dto.getPoints())
                     .build();
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (CustomerNotExistException | CustomerHasNotSalesException e) {

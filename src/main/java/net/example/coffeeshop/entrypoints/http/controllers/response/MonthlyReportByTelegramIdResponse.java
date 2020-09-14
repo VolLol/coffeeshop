@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.example.coffeeshop.repositories.models.Sale;
+import net.example.coffeeshop.entrypoints.http.controllers.response.models.MonthlyReportModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,5 +18,7 @@ public class MonthlyReportByTelegramIdResponse {
     @Getter
     private BigDecimal spentInLastMonth;
     @Getter
-    private List<Sale> sales = new ArrayList<>();
+    private Integer points;
+    @Getter
+    private List<MonthlyReportModel> report = new ArrayList<>();
 }
