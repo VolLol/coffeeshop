@@ -15,8 +15,7 @@ Content-Type: application/json
 {
   "customerId": 1,
   "shopId": 1,
-  "paid": 15.75,
-  "reason": "SALE"
+  "paid": 15.75
 }
 
 ###

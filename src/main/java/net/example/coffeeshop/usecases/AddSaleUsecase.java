@@ -49,7 +49,7 @@ public class AddSaleUsecase {
                 .createdAt(LocalDateTime.now())
                 .build();
         saleRepository.save(sale);
-        dto.setMessage("Successful add sale for customer with id= " + customerId + " . Customer paid = " + paid);
+        dto.setMessage("Successful add sale for customer with id = " + customerId + " . Customer paid = " + paid);
         return dto;
     }
 }

@@ -1,7 +1,6 @@
 package net.example.coffeeshop.entrypoints.http.controllers.request;
 
 import lombok.Getter;
-import net.example.coffeeshop.repositories.models.enums.Reason;
 
 import java.math.BigDecimal;
 
@@ -18,6 +17,4 @@ public class AddNewSaleRequest {
     @Getter
     private BigDecimal paid;
 
-    @Getter
-    private Reason reason;
 }
