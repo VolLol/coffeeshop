@@ -17,13 +17,11 @@ import net.example.coffeeshop.usecases.GiveOutFreeCupUsecase;
 import net.example.coffeeshop.usecases.UpdateCustomerInformationUsecase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequestMapping("v1/api/employee")
 public class EmployeeActionController {
 
     private final UpdateCustomerInformationUsecase updateCustomerInformationUsecase;
@@ -36,7 +34,7 @@ public class EmployeeActionController {
         this.giveOutFreeCupUsecase = giveOutFreeCupUsecase;
     }
 
-    @PostMapping("v1/api/employee/customers/setProperties")
+    @PostMapping("/customers/setProperties")
     public CustomerPropertiesResponse setCustomerProperties(@RequestBody CustomerPropertiesRequest request) {
         try {
             UpdateCustomerInformationDTO dto = updateCustomerInformationUsecase.execute(
@@ -48,7 +46,7 @@ public class EmployeeActionController {
     }
 
 
-    @PostMapping("v1/api/employee/customers/addSale")
+    @PostMapping("/customers/addSale")
     public AddNewSaleResponse addSale(@RequestBody AddNewSaleRequest request) {
         try {
             AddSaleDTO dto = addSaleUsecase.execute(request.getCustomerId(), request.getShopId(), request.getPaid());
@@ -60,7 +58,7 @@ public class EmployeeActionController {
     }
 
 
-    @PutMapping("v1/api/employee/giveOutFreeCup")
+    @PutMapping("/giveOutFreeCup")
     public ResponseEntity<GiveOutFreeCupResponse> giveOutFreeCup(@RequestBody GiveOutFreeCupRequest request) {
         try {
             GiveOutFreeCupDTO dto = giveOutFreeCupUsecase.execute(request.getCustomerId(), request.getShopId());

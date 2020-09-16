@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
+@RequestMapping("v1/api/customer/")
 public class CustomerController {
 
     private final RegistrationNewCustomerUsecase registrationNewCustomerUsecase;
@@ -31,7 +32,7 @@ public class CustomerController {
         this.monthlyReportByTelegramIdUsecase = monthlyReportByTelegramIdUsecase;
     }
 
-    @PostMapping("v1/api/customer/registration")
+    @PostMapping("/registration")
     public ResponseEntity<RegistrationNewCustomerResponse> registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
         RegistrationNewCustomerResponse response;
         try {
@@ -45,7 +46,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("v1/api/customer/{telegramId}/profile")
+    @GetMapping("/{telegramId}/profile")
     public ResponseEntity<CustomerProfileResponse> showProfileByTelegramId(@PathVariable Long telegramId) {
         CustomerProfileDTO dto;
         try {
@@ -65,7 +66,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("v1/api/customer/{telegramId}/monthlyReport")
+    @GetMapping("/{telegramId}/monthlyReport")
     public ResponseEntity<MonthlyReportByTelegramIdResponse> showMonthlyReportByTelegramId(@PathVariable Long telegramId) {
         try {
             MonthlyReportDTO dto = monthlyReportByTelegramIdUsecase.execute(telegramId);
