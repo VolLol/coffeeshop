@@ -11,8 +11,5 @@ public class RegistrationNewCustomerResponse {
     @Getter
     private String message;
 
-    @Getter
-    private HttpStatus httpStatus;
-
 
 }

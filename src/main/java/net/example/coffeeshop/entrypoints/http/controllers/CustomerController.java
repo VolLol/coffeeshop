@@ -32,15 +32,14 @@ public class CustomerController {
     }
 
     @PostMapping("v1/api/customer/registration")
-    public RegistrationNewCustomerResponse registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
+    public ResponseEntity<RegistrationNewCustomerResponse> registrationNewCustomer(@RequestBody RegistrationNewCustomerRequest request) {
         RegistrationNewCustomerResponse response;
         try {
             RegistrationNewCustomerDTO dto = registrationNewCustomerUsecase.execute(request.getTelegramId());
             response = RegistrationNewCustomerResponse.builder()
                     .message(dto.getMessage())
-                    .httpStatus(HttpStatus.CREATED)
                     .build();
-            return response;
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (CustomerAlreadyExistException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }

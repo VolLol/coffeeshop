@@ -1,5 +1,7 @@
 package net.example.coffeeshop.usecases;
 
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerNotExistException;
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.ShopNotExistException;
 import net.example.coffeeshop.repositories.models.Customer;
 import net.example.coffeeshop.repositories.models.Sale;
 import net.example.coffeeshop.repositories.models.Shop;
@@ -27,30 +29,27 @@ public class AddSaleUsecase {
         this.saleRepository = saleRepository;
     }
 
-    public AddSaleDTO execute(Long customerId, Long shopId, BigDecimal paid, Reason reason) {
+    public AddSaleDTO execute(Long customerId, Long shopId, BigDecimal paid) throws CustomerNotExistException, ShopNotExistException {
         AddSaleDTO dto = new AddSaleDTO();
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            dto.setMessage("Customer with id = " + customerId + " not exist");
-        } else {
-            Optional<Shop> shop = shopRepository.findById(shopId);
-            if (shop.isEmpty()) {
-                dto.setMessage("Shop with id = " + shopId + " not exist");
-            } else {
-                customerRepository.setPoints(1, customerId, LocalDateTime.now());
-                Sale sale = Sale.builder()
-                        .customerId(customerId)
-                        .shopId(shopId)
-                        .paid(paid)
-                        .reason(Reason.SALE)
-                        .createdAt(LocalDateTime.now())
-                        .build();
-                saleRepository.save(sale);
-                // поменять порядок для Optional
-                dto.setMessage("Successful add sale for customer with id= " + customerId + " . Customer paid = " + paid);
-            }
+            throw new CustomerNotExistException("Customer with id = " + customerId + " not exist");
         }
-
+        Optional<Shop> shop = shopRepository.findById(shopId);
+        if (shop.isEmpty()) {
+            throw new ShopNotExistException("Shop with id = " + shopId + " not exist");
+        }
+        Integer newCountOfPoints = customer.get().getPoints() + 1;
+        customerRepository.setPoints(newCountOfPoints, customerId, LocalDateTime.now());
+        Sale sale = Sale.builder()
+                .customerId(customerId)
+                .shopId(shopId)
+                .paid(paid)
+                .reason(Reason.SALE)
+                .createdAt(LocalDateTime.now())
+                .build();
+        saleRepository.save(sale);
+        dto.setMessage("Successful add sale for customer with id= " + customerId + " . Customer paid = " + paid);
         return dto;
     }
 }

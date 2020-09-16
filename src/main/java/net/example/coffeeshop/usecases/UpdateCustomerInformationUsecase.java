@@ -1,5 +1,6 @@
 package net.example.coffeeshop.usecases;
 
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.CustomerNotExistException;
 import net.example.coffeeshop.repositories.models.Customer;
 import net.example.coffeeshop.usecases.dto.UpdateCustomerInformationDTO;
 import net.example.coffeeshop.repositories.models.enums.Gender;
@@ -17,15 +18,14 @@ public class UpdateCustomerInformationUsecase {
         this.customerRepository = customerRepository;
     }
 
-    public UpdateCustomerInformationDTO execute(Long customerId, Gender newGender, LocalDate newYearOfBirth) {
+    public UpdateCustomerInformationDTO execute(Long customerId, Gender newGender, LocalDate newYearOfBirth) throws CustomerNotExistException {
         UpdateCustomerInformationDTO dto = new UpdateCustomerInformationDTO();
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            dto.setMessage("Customer ID = " + customerId + " not found ");
-        } else {
-            customerRepository.setGenderAndDateIfBirth(newYearOfBirth, newGender, customerId);
-            dto.setMessage("Customer ID = " + customerId + " set new gender = " + newGender + " and new year of birth = " + newYearOfBirth);
+            throw new CustomerNotExistException("Customer eith id = " + customerId + " not exist");
         }
+        customerRepository.setGenderAndDateIfBirth(newYearOfBirth, newGender, customerId);
+        dto.setMessage("Customer ID = " + customerId + " set new gender = " + newGender + " and new year of birth = " + newYearOfBirth);
         return dto;
     }
 }

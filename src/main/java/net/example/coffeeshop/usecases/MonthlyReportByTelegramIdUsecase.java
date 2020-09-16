@@ -35,19 +35,19 @@ public class MonthlyReportByTelegramIdUsecase {
         Customer customer = customerRepository.findByTelegramId(telegramId);
         if (customer == null) {
             throw new CustomerNotExistException("Customer with telegram id = " + telegramId + " not exist");
-        } else {
-            Long customerId = customer.getId();
-            List<Sale> lastMonthSales = saleRepository.findAllByCustomerIdAndCreatedAtGreaterThan(customerId, LocalDateTime.now().minusMonths(1L));
-            if (lastMonthSales.isEmpty()) {
-                throw new CustomerHasNotSalesException("Customer with id = " + customerId + " has not sales");
-            } else {
-
-                dto = MonthlyReportDTO.builder().report(prepareReport(lastMonthSales))
-                        .allSpendMoney(calculateAllMoneySpent(lastMonthSales))
-                        .points(customer.getPoints())
-                        .build();
-            }
         }
+        Long customerId = customer.getId();
+        List<Sale> lastMonthSales = saleRepository.findAllByCustomerIdAndCreatedAtGreaterThan(customerId, LocalDateTime.now().minusMonths(1L));
+        if (lastMonthSales.isEmpty()) {
+            throw new CustomerHasNotSalesException("Customer with id = " + customerId + " has not sales");
+        } else {
+
+            dto = MonthlyReportDTO.builder().report(prepareReport(lastMonthSales))
+                    .allSpendMoney(calculateAllMoneySpent(lastMonthSales))
+                    .points(customer.getPoints())
+                    .build();
+        }
+
         return dto;
     }
 
