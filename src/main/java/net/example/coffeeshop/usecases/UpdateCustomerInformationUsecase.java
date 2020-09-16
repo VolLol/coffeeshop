@@ -8,6 +8,7 @@ import net.example.coffeeshop.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class UpdateCustomerInformationUsecase {
         if (customer.isEmpty()) {
             throw new CustomerNotExistException("Customer eith id = " + customerId + " not exist");
         }
-        customerRepository.setGenderAndDateIfBirth(newYearOfBirth, newGender, customerId);
+        customerRepository.setGenderAndDateIfBirth(customerId, newYearOfBirth, newGender, LocalDateTime.now());
         dto.setMessage("Customer ID = " + customerId + " set new gender = " + newGender + " and new year of birth = " + newYearOfBirth);
         return dto;
     }

@@ -19,8 +19,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE customers set yearofbirth = :yearofbirth, gender = :gender where id = :id")
-    void setGenderAndDateIfBirth(@Param("yearofbirth") LocalDate yearofbirth, @Param("gender") Gender gender, @Param("id") Long customerId);
+    @Query("UPDATE customers set yearofbirth = :yearofbirth, gender = :gender,updatedat =:updatedAt where id = :id")
+    void setGenderAndDateIfBirth(@Param("id") Long customerId, @Param("yearofbirth") LocalDate yearofbirth, @Param("gender") Gender gender, @Param("updatedAt") LocalDateTime updatedAt);
 
     @Transactional
     @Modifying

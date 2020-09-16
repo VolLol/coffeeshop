@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "customerId": 1,
-  "gender": "MALE",
+  "gender": "FEMALE",
   "dateOfBirth": "1995-11-11"
 }
 
