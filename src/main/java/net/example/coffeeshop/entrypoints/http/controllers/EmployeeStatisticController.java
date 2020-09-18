@@ -3,22 +3,36 @@ package net.example.coffeeshop.entrypoints.http.controllers;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AverageBillByLastMonthResponse;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AvgCountCustomerByGenderResponse;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AvgCountCustomersByLastPeriodResponse;
-import net.example.coffeeshop.repositories.models.enums.Gender;
 import net.example.coffeeshop.repositories.models.enums.Period;
+import net.example.coffeeshop.usecases.AvgCountCustomerByGenderUsecase;
+import net.example.coffeeshop.usecases.dto.AvgCountCustomerByGenderDTO;
+import net.example.coffeeshop.usecases.exceptions.IncorrectGenderException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("v1/api/employee/statistics")
 public class EmployeeStatisticController {
 
+    private final AvgCountCustomerByGenderUsecase avgCountCustomerByGenderUsecase;
+
+    public EmployeeStatisticController(AvgCountCustomerByGenderUsecase avgCountCustomerByGenderUsecase) {
+        this.avgCountCustomerByGenderUsecase = avgCountCustomerByGenderUsecase;
+    }
 
     @GetMapping("/getAvgCountCustomersByGender")
     @ResponseBody
-    public AvgCountCustomerByGenderResponse getAvgCountCustomersByGender(@RequestParam(name = "gender") Gender gender) {
-        return AvgCountCustomerByGenderResponse.builder()
-                .avgCount(78191L)
-                .message("You choose " + gender)
-                .build();
+    public AvgCountCustomerByGenderResponse getAvgCountCustomersByGender(@RequestParam(name = "gender") String gender) {
+        try {
+            AvgCountCustomerByGenderDTO dto = avgCountCustomerByGenderUsecase.execute(gender.toUpperCase());
+            return AvgCountCustomerByGenderResponse.builder()
+                    .avgCount(dto.getCount())
+                    .message("You choose " + gender)
+                    .build();
+        } catch (IncorrectGenderException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
     @GetMapping("/getAverageBillByLastMonth")

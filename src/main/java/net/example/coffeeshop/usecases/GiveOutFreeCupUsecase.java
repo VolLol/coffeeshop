@@ -45,7 +45,7 @@ public class GiveOutFreeCupUsecase {
         if (customer.get().getPoints() < 12) {
             throw new CustomerHasNotEnoughPointsException("Customer with id = " + customerId + " have not enough points for free cup");
         }
-        dto.setMessage("Give out free cup for user " + customerId + " in the shop with id: " + shopId);
+        dto.setMessage("Give out free cup for user = " + customerId + " in the shop with id: " + shopId);
         Integer newPoints = customer.get().getPoints() - 12;
         customerRepository.setPoints(newPoints, customerId, LocalDateTime.now());
         Sale sale = Sale.builder()

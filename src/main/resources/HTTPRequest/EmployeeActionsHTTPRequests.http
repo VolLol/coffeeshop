@@ -2,7 +2,7 @@ POST http://localhost:8080/v1/api/employee/customers/setProperties
 Content-Type: application/json
 
 {
-  "customerId": 1,
+  "customerId": 2,
   "gender": "FEMALE",
   "dateOfBirth": "1995-11-11"
 }
@@ -13,8 +13,8 @@ POST http://localhost:8080/v1/api/employee/customers/addSale
 Content-Type: application/json
 
 {
-  "customerId": 1,
-  "shopId": 1,
+  "customerId": 2,
+  "shopId": 4,
   "paid": 15.75
 }
 
@@ -24,8 +24,8 @@ PUT http://localhost:8080/v1/api/employee/giveOutFreeCup
 Content-Type: application/json
 
 {
-  "customerId": 1,
-  "shopId": 1
+  "customerId": 2,
+  "shopId": 4
 }
 
 ###

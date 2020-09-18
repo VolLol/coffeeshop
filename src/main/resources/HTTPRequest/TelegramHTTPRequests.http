@@ -7,12 +7,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/v1/api/customer/9/profile
+GET http://localhost:8080/v1/api/customer/12331/profile
 Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/v1/api/customer/724/monthlyReport
+GET http://localhost:8080/v1/api/customer/12331/monthlyReport
 Content-Type: application/json
 
 ###

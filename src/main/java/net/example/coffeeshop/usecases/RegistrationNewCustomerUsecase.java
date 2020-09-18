@@ -28,6 +28,7 @@ public class RegistrationNewCustomerUsecase {
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .gender(Gender.UNKNOWN)
+                    .points(0)
                     .build();
             repository.save(newCustomer);
             return dto;

@@ -1,12 +1,10 @@
-CREATE CAST (varchar AS genderType) WITH INOUT AS IMPLICIT;
-
 create table customers
 (
     id          bigserial primary key,
     telegramId  bigint not null,
     yearOfBirth date,
-    gender      genderType default 'UNKNOWN',
-    points      int        default 0,
+    gender      varchar default 'UNKNOWN' not null,
+    points      int     default 0         not null,
     updatedAt   timestamp,
     createdAt   timestamp
 );

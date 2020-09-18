@@ -26,4 +26,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Modifying
     @Query("UPDATE customers set points = :points,updatedAt=:updatedAt where id = :customerId")
     void setPoints(@Param("points") Integer points, @Param("customerId") Long customerId, @Param("updatedAt") LocalDateTime updatedAt);
+
+    Long countByGender(Gender gender);
 }
