@@ -1,10 +1,13 @@
 package net.example.coffeeshop.entrypoints.http.controllers;
 
+import net.example.coffeeshop.entrypoints.http.controllers.exceptions.ShopNotExistException;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AverageBillByLastMonthResponse;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AvgCountCustomerByGenderResponse;
 import net.example.coffeeshop.entrypoints.http.controllers.response.AvgCountCustomersByLastPeriodResponse;
 import net.example.coffeeshop.repositories.models.enums.Period;
+import net.example.coffeeshop.usecases.AverageBillByLastMonthUsecase;
 import net.example.coffeeshop.usecases.AvgCountCustomerByGenderUsecase;
+import net.example.coffeeshop.usecases.dto.AvgBillByLastMonthDTO;
 import net.example.coffeeshop.usecases.dto.AvgCountCustomerByGenderDTO;
 import net.example.coffeeshop.usecases.exceptions.IncorrectGenderException;
 import org.springframework.http.HttpStatus;
@@ -16,9 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class EmployeeStatisticController {
 
     private final AvgCountCustomerByGenderUsecase avgCountCustomerByGenderUsecase;
+    private final AverageBillByLastMonthUsecase averageBillByLastMonthUsecase;
 
-    public EmployeeStatisticController(AvgCountCustomerByGenderUsecase avgCountCustomerByGenderUsecase) {
+    public EmployeeStatisticController(AvgCountCustomerByGenderUsecase avgCountCustomerByGenderUsecase, AverageBillByLastMonthUsecase averageBillByLastMonthUsecase) {
         this.avgCountCustomerByGenderUsecase = avgCountCustomerByGenderUsecase;
+        this.averageBillByLastMonthUsecase = averageBillByLastMonthUsecase;
     }
 
     @GetMapping("/getAvgCountCustomersByGender")
@@ -37,10 +42,15 @@ public class EmployeeStatisticController {
 
     @GetMapping("/getAverageBillByLastMonth")
     public AverageBillByLastMonthResponse getAverageBillByLastMonth(@RequestParam(name = "shopId") Long shopId) {
-        return AverageBillByLastMonthResponse.builder()
-                .avgBill(78237L)
-                .shopId(shopId)
-                .build();
+        try {
+            AvgBillByLastMonthDTO dto = averageBillByLastMonthUsecase.execute(shopId);
+            return AverageBillByLastMonthResponse.builder()
+                    .avgBill(dto.getAvgBill())
+                    .shopId(shopId)
+                    .build();
+        } catch (ShopNotExistException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
     }
 
 

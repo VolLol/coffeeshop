@@ -11,4 +11,7 @@ import java.util.List;
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     List<Sale> findAllByCustomerIdAndCreatedAtGreaterThan(Long customerId, LocalDateTime dateInLastMonth);
+
+    List<Sale> findAllByShopIdAndCreatedAtGreaterThan(Long shopId, LocalDateTime dateInLastMonth);
+
 }
