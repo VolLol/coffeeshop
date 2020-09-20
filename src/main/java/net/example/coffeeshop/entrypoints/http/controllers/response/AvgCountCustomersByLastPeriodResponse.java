@@ -11,8 +11,8 @@ public class AvgCountCustomersByLastPeriodResponse {
     private Long shopId;
 
     @Getter
-    private Period period;
+    private String period;
 
     @Getter
-    private Long avgCount;
+    private Integer avgCount;
 }
