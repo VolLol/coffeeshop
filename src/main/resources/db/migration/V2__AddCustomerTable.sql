@@ -1,7 +1,7 @@
 create table customers
 (
     id          bigserial primary key,
-    telegramId  bigint not null,
+    telegramId  bigint                    not null,
     yearOfBirth date,
     gender      varchar default 'UNKNOWN' not null,
     points      int     default 0         not null,

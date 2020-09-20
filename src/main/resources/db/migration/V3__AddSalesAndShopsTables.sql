@@ -1,6 +1,6 @@
 create table shops
 (
-    id      serial not null primary key,
+    id      bigserial primary key,
     address varchar
 );
 
@@ -10,7 +10,7 @@ create unique index shops_id_uindex on shops (id);
 
 create table sales
 (
-    id         bigint                 not null primary key,
+    id         bigserial primary key,
     customerId int                    not null
         constraint sales_customers_id_fk
             references customers,
